@@ -1,0 +1,187 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: rgba(132, 0, 255, 0.788);
+        }
+        body {
+            background-color:  rgba(12, 7, 61, 0.616);
+        }
+        #quiz-area {
+            text-align: center;
+            margin-top: 30px;
+        }
+        input, button {
+            font-size: 1em;
+            margin: 8px;
+            padding: 6px 12px;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            background: #a084ee;
+            color: #fff;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #7c5fe6;
+        }
+        .quiz-label {
+            font-size: 1.2em;
+            color: #ffe066;
+            margin-bottom: 10px;
+        }
+        .note {
+            font-size: 0.9em;
+            color: #ffb347;
+        }
+        .quiz-input {
+            font-size: 1em;
+            padding: 6px 12px;
+            border-radius: 5px;
+            border: 1px solid #a084ee;
+            background: #f3f0ff;
+            color: #333;
+        }
+        .quiz-btn {
+            background: #a084ee;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1em;
+            margin: 8px;
+            padding: 6px 12px;
+            border-radius: 5px;
+            border: none;
+            transition: background 0.2s;
+        }
+        .quiz-btn:hover {
+            background: #7c5fe6;
+        }
+        .surprise {
+            text-align: center;
+            margin-top: 30px;
+            animation: pop 0.7s;
+        }
+        .birthday-text {
+            font-size: 3em;
+            color: #ff69b4;
+            text-shadow: 2px 2px 10px #fff176, 0 0 10px #a084ee;
+            margin: 20px 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            letter-spacing: 2px;
+        }
+        .big-cake {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0 20px 0;
+        }
+        .cake-emoji {
+            font-size: 200px; /* Make the cake much bigger */
+            display: block;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <h1>SPECIAL GIFT ^_^</h1>
+    <div id="quiz-area">
+        <button id="start-btn">Start</button>
+    </div>
+    <script>
+        const quizArea = document.getElementById('quiz-area');
+        const startBtn = document.getElementById('start-btn');
+
+        startBtn.onclick = function() {
+            quizArea.innerHTML = `
+                <p class="quiz-label">Please enter your name: <br> <span class="note">ps it won't work if you don't use small letters</span></p>
+                <input type="text" id="name-input" class="quiz-input" placeholder="Your name">
+                <button id="name-btn" class="quiz-btn">Submit Name</button>
+            `;
+            document.getElementById('name-btn').onclick = function() {
+                const name = document.getElementById('name-input').value.trim();
+                if (name=="alaa") {
+                    quizArea.innerHTML = `<p class="quiz-label">WELCOMEEE, <b>${name}</b>!<br>Are you ready for a little quiz? <br> <span class="note">If you answer all the questions you will get a surprise</span></p> 
+                        <button id="quiz-start-btn" class="quiz-btn">Start Quiz</button>`;
+                    document.getElementById('quiz-start-btn').onclick = function() {
+                        // First question (text input)
+                        quizArea.innerHTML = `
+                            <p class="quiz-label">First question  <br> 1+1= ?</p>
+                            <input type="text" id="answer-input" class="quiz-input" placeholder="Your answer">
+                            <button id="answer-btn" class="quiz-btn">Submit Answer</button>
+                        `;
+                        document.getElementById('answer-btn').onclick = function() {
+                            const answer = document.getElementById('answer-input').value.trim();
+                            if (answer === "2") {
+                                // Second question (multiple choice)
+                                quizArea.innerHTML = `
+                                    <p class="quiz-label">What is the worst place to live in Algiers?</p>
+                                    <label><input type="radio" name="place" value="birkhadem"> Birkhadem</label><br>
+                                    <label><input type="radio" name="place" value="deergana"> Dergana</label><br>
+                                    <label><input type="radio" name="place" value="elsmar"> Elsmar</label><br>
+                                    <label><input type="radio" name="place" value="elharrach"> Elharrach</label><br>
+                                    <button id="mcq-btn" class="quiz-btn">Submit Answer</button>
+                                `;
+                                document.getElementById('mcq-btn').onclick = function() {
+                                    const options = document.getElementsByName('place');
+                                    let selected = "";
+                                    for (let opt of options) {
+                                        if (opt.checked) selected = opt.value;
+                                    }
+                                    if (selected === "deergana" || selected === "elsmar") {
+                                        // Last question (text input)
+                                        quizArea.innerHTML = `
+                                            <p class="quiz-label">Last question:<br>Solve this following math problem:</p>
+                                            <img src="math.jpg" alt="Math Problem" style="max-width:300px; display:block; margin: 0 auto 16px;">
+                                            <input type="text" id="final-input" class="quiz-input" placeholder="Type your answer">
+                                            <button id="final-btn" class="quiz-btn">Submit</button>
+                                            <p class="note">Hint: The answer is a number <br>( ni ngaser just type 1) </p> 
+                                            
+                                        `;
+                                        document.getElementById('final-btn').onclick = function() {
+                                            const finalAnswer = document.getElementById('final-input').value.trim().toLowerCase();
+                                            if (finalAnswer === "1") {
+                                                quizArea.innerHTML = `
+                                                    <div class="surprise">
+                                                        <h1 class="birthday-text">HAPPY BIRTHDAY ALAA!</h1>
+                                                        <p class="quiz-label">Wishing you all the happiness in the world! <br>Thank you for being such a wonderful friend!</p>
+                                                        <div class="big-cake">
+                                                            <span class="cake-emoji">&#127874;</span>
+                                                        </div>
+                                                        <img src="flwr.gif" title="flower summer" width="150" height="120">
+                                                        <img src="flwr.gif" title="flower summer" width="150" height="120">
+                                                        <img src="flwr.gif" title="flower summer" width="150" height="120">
+                                                    </div>
+                                                `;
+                                            } else {
+                                                quizArea.innerHTML += `<p class="quiz-label" style="color:red;">Wrong! Try again.</p>`;
+                                            }
+                                        }
+                                    } else if (selected) {
+                                        quizArea.innerHTML = `<p class="quiz-label">Wrong! Try again.</p>`;
+                                    } else {
+                                        alert("Please select an answer!");
+                                    }
+                                }
+                            } else {
+                                quizArea.innerHTML = `<p class="quiz-label">Wrong! Try again.</p>`;
+                            }
+                        }
+                    }
+                } else {
+                    alert("Who are you? Please enter the correct name.");
+                }
+            }
+        }
+    </script>
+</body>
+</html>
